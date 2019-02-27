@@ -9,7 +9,8 @@ import br.com.javaoo.interfaces.Ligador;
 import br.com.javaoo.interfaces.Veiculo;
 
 public abstract class VeiculoBase implements Veiculo, Ligador, Andador {
-
+//Veículo base que serve de suporte para os outros veiculos
+	
 	private String nome;
 	private String marca;
 	private String chassi;
@@ -43,11 +44,13 @@ public abstract class VeiculoBase implements Veiculo, Ligador, Andador {
 		return chassi;
 	}
 
+	
+	//usando encapsulamento para verificar no get SetChassi se o chassi é igual 5 caracteres
 	public void setChassi(String chassi) throws Exception {
 		if (chassi.length() == 5) {
 			this.chassi = chassi;
-		} else {
-			throw new ChassiInvalidoException(chassi);
+		} else { //caso o chassi nao seja igual a 5 caracteres, retorna um erro
+			throw new ChassiInvalidoException(chassi); //cria uma exeção para quando o chassi for inválido
 		}
 	}
 
@@ -67,23 +70,25 @@ public abstract class VeiculoBase implements Veiculo, Ligador, Andador {
 		return velocidade;
 	}
 
+	//final foi utilizado para nao deixar o método ligar ser sobre escrito nas outras classes, pois todo veiculo liga de forma igual
 	public final void ligar() {
 		this.ligado = true;
 		this.velocidade = 0;
-		System.out.println("O ve�culo ligou!");
+		System.out.println("O veículo ligou!");
 	}
 
 	public final void desligar() {
 		this.ligado = false;
 		this.velocidade = 0;
-		System.out.println("O ve�culo desligou!");
+		System.out.println("O veículo desligou!");
 	}
+	
 
 	public void abastecer(float litros) throws AbastecimentoVeiculoLigadoException {
 		if (!this.ligado) {
 			qntdCombustivel += litros;
 		} else {
-			throw new AbastecimentoVeiculoLigadoException();
+			throw new AbastecimentoVeiculoLigadoException(); //retorna uma exceção caso for abastecer e o veículo esteja ligado
 		}
 	}
 
@@ -91,7 +96,7 @@ public abstract class VeiculoBase implements Veiculo, Ligador, Andador {
 		if (this.ligado) {
 			this.velocidade += 10;
 		} else {
-			throw new AcelerarVeiculoLigadoException();
+			throw new AcelerarVeiculoLigadoException(); //retorna exceção caso tente ligar e o veículo esteja desligado
 		}
 	}
 
